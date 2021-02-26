@@ -1,24 +1,23 @@
 
 
-<div>
+<div fxflex>
 	<!-- headder -->
-	<div fxLayout="column">
-		<div fxFlex="40">
+	<div fxLayout="row">
+		<span fxFlex="40">
 			<h1>XYZ Clothing</h1>
-		</div>
-		<div fxFlex="40">
+		</span>
+		<span fxFlex="40">
 			<mat-form-field>
-				<mat-select (change)="updateSiteCurrency($event.target.value)">
-					<mat-option *ngFor="let currency of exchangeRates; first as isFirst" value="exchangeRates.base" selected="isFirst">
+				<mat-select matSelect (selectionChange)="updateSiteCurrency($event.value)" [value]="currentExchangeRate" >
+					<mat-option *ngFor="let currency of exchangeRates" [value]="currency">
 						{{currency.base}}
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
-		</div>
+		</span>
 	</div>
 	<!-- content -->
-	<mat-card *ngFor="let p of products">
-		<h3> {{p.name}} </h3>
-		<p> {{p.price.amount}}{{p.price.base}} </p>
-	</mat-card>
+	<div fxLayout="row" Layout-Wrap>
+		<app-product *ngFor="let p of products" [product]="p" [currentExchangeRate]="currentExchangeRate"></app-product>
+	</div>
 </div>

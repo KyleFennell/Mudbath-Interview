@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { ExchangeRate } from 'src/models/ExchangeRate';
 import { Product } from 'src/models/Product';
 import { ExchangeRates_Service } from 'src/services/ExchangeRates_Service';
@@ -21,29 +22,27 @@ export class AppComponent implements OnInit{
     });
     this.s_ExchangeRates.getExchangeRates().subscribe( exchangeRates => {
       this.exchangeRates = exchangeRates;
-    })
+      this.currentExchangeRate = exchangeRates[0];
+    });
+    this.updateSiteCurrency;
   }
 
-  updateSiteCurrency(currency: string): void{
+  updateSiteCurrency(currency: ExchangeRate): void{
     console.log("updating currency "+currency)
     this.setCurrentExchangeRate(currency);
-    this.products.forEach(p => {
-      p.price.amount = this.convertPrice(p);
-      p.price.base = this.currentExchangeRate.base; // i don't really like changing the base rate but it's only getting stored locally so it's ok for now
-    });
-    console.log(this.currentExchangeRate);
-    console.log(this.products);
   }
 
-  setCurrentExchangeRate(currency: string): void {
-    this.currentExchangeRate = this.exchangeRates.filter(e => e.base === currency)[0];
+  setCurrentExchangeRate(currency: ExchangeRate): void {
+    this.currentExchangeRate = currency
   }
 
-  convertPrice(product: Product): number {
+  convertPrice(product: Product): string {
+    console.log(product);
     if (product.price.base === this.currentExchangeRate.base){
-      return product.price.amount
+      return product.price.amount.toFixed(2);
     }
-    return product.price.amount * this.currentExchangeRate.rates[product.price.base];
+    let convertedAmount = product.price.amount * this.currentExchangeRate.rates[product.price.base];
+    return convertedAmount.toFixed(2);
   }
 
 }

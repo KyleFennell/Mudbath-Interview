@@ -1,1 +1,17 @@
-<p>product works!</p>
+<mat-card fxFlex="25">
+    <img mat-card-image class=productPreview>
+    <div *ngIf="editMode; then productEdit; else productInfo"></div>
+    <mat-card-content >
+        <ng-template #productInfo>
+            <h3>{{product.name}}</h3>
+            <p> {{"$"+convertPrice(product)+" "+   currentExchangeRate.base}}</p>
+            <!-- <button mat-icon-button (click)="editMode=true"><mat-icon>edit</mat-icon></button> -->
+        </ng-template>
+        <ng-template #productEdit>
+            <!-- <mat-form-field>
+                <mat-label>Name: </mat-label>
+                <ma
+            </mat-form-field> -->
+        </ng-template>
+    </mat-card-content>
+</mat-card>
