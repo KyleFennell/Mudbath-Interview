@@ -1,6 +1,4 @@
-import { Currency } from "./Currency"
-
 export interface ExchangeRate{
-    base: Currency;
+    base: string;
     rates: Object;
 }

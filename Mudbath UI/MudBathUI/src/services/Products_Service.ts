@@ -1,18 +1,16 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/Product';
 import { Observable } from 'rxjs';
-@Injectable({
-    providedIn: 'root'
-})
+import { Injectable } from '@angular/core';
+@Injectable({ providedIn: 'root' })
 export class Products_Service {
-    inputFolder: string = '/assets/inputData/';
+    fileName: string = '../assets/products.json';
 
-    constructor(private http: HttpClient){}
+    constructor(private http:HttpClient){}
 
-    getProducts(fileName: string): Observable<Product[]>{
+    getProducts(): Observable<Product[]>{
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' })
-        let products = this.http.get<Product[]>(this.inputFolder+fileName, { headers });
+        let products = this.http.get<Product[]>(this.fileName, { headers });
         return products;
     }
 }
