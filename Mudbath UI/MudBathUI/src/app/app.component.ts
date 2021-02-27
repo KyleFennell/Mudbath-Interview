@@ -28,21 +28,8 @@ export class AppComponent implements OnInit{
   }
 
   updateSiteCurrency(currency: ExchangeRate): void{
-    console.log("updating currency "+currency)
-    this.setCurrentExchangeRate(currency);
+    this.currentExchangeRate = currency    
   }
 
-  setCurrentExchangeRate(currency: ExchangeRate): void {
-    this.currentExchangeRate = currency
-  }
-
-  convertPrice(product: Product): string {
-    console.log(product);
-    if (product.price.base === this.currentExchangeRate.base){
-      return product.price.amount.toFixed(2);
-    }
-    let convertedAmount = product.price.amount * this.currentExchangeRate.rates[product.price.base];
-    return convertedAmount.toFixed(2);
-  }
 
 }

@@ -12,12 +12,15 @@ export class ProductComponent implements OnInit {
   constructor() { }
   @Input() product:Product;
   @Input() currentExchangeRate: ExchangeRate;
+  @Input() exchangeRates: ExchangeRate[];
   editMode: boolean = false;
   ngOnInit(): void {
   }
 
   convertPrice(product: Product): string {
-    console.log(product);
+    if (!this.currentExchangeRate){
+      return product.price.amount.toFixed(2);
+    }
     if (product.price.base === this.currentExchangeRate.base){
       return product.price.amount.toFixed(2);
     }

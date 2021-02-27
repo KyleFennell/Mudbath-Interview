@@ -17,7 +17,10 @@
 		</span>
 	</div>
 	<!-- content -->
-	<div fxLayout="row" Layout-Wrap>
-		<app-product *ngFor="let p of products" [product]="p" [currentExchangeRate]="currentExchangeRate"></app-product>
+	<div fxLayout="row">
+		<app-product *ngFor="let p of products" 
+			[product]="p" 
+			[currentExchangeRate]="currentExchangeRate"
+			[exchangeRates]="exchangeRates"></app-product>
 	</div>
 </div>

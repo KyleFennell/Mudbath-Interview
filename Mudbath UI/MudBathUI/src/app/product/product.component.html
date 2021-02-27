@@ -1,17 +1,39 @@
-<mat-card fxFlex="25">
+<mat-card class="product-card">
     <img mat-card-image class=productPreview>
     <div *ngIf="editMode; then productEdit; else productInfo"></div>
     <mat-card-content >
         <ng-template #productInfo>
             <h3>{{product.name}}</h3>
-            <p> {{"$"+convertPrice(product)+" "+   currentExchangeRate.base}}</p>
-            <!-- <button mat-icon-button (click)="editMode=true"><mat-icon>edit</mat-icon></button> -->
+            <p> {{"$"+convertPrice(product)+" "+   currentExchangeRate?.base||product.price.base}}</p>
+            <button mat-icon-button (click)="editMode=true"><mat-icon>edit</mat-icon></button>
         </ng-template>
         <ng-template #productEdit>
-            <!-- <mat-form-field>
+            <mat-form-field>
+                <mat-label>Id: </mat-label>
+                <input matInput type="number" (change)="validateId($event.value)"/>
+            </mat-form-field><br>
+            <mat-form-field>
                 <mat-label>Name: </mat-label>
-                <ma
-            </mat-form-field> -->
+                <input matInput type="text" [(ngModel)]="product.name"/>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Price: </mat-label>
+                <input matInput type="text" [(ngModel)]="product.price.amount">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Currency:</mat-label>
+                <mat-select matSelect [(ngModel)]="product.price.base">
+                    <mat-option *ngFor="let rate of exchangeRates" [value]=rate.base>{{rate.base}}</mat-option>
+                </mat-select>
+            </mat-form-field><br/>
+            <mat-form-field>
+                <mat-label>Description: </mat-label>
+                <input matInput type="text" [(ngModel)]="product.description">
+            </mat-form-field>
+            <!-- <mat-form-field>
+                <mat-label>Related Products: </mat-label>
+            </mat-form-field> --><br>
+            <button mat-icon-button (click)="editMode=false"><mat-icon>save</mat-icon></button>
         </ng-template>
     </mat-card-content>
 </mat-card>
